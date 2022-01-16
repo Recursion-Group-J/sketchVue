@@ -1,6 +1,10 @@
 <template>
-    <div id="canvas-container">
+    <div>
+      <p>s:← d:→ k:↑ l:↓ </p>
+      <div id="canvas-container">
+      </div>
     </div>
+    
 </template>
 
 <script>
@@ -41,10 +45,34 @@ export default {
 
     this.layer.draw(); //これで描画
 
-    this.stage.addEventListener('mouseup', this.mouseup)
+    window.addEventListener('keydown', this.sketching);
   },
   methods:{
+    sketching:function(event){
+      let ajstX = 0;
+      let ajstY = 0;
 
+      if (event.key === 'k' ) { ajstX = 0, ajstY = -1;}
+      else if (event.key === 'l') {ajstX = 0, ajstY = 1;}
+      else if (event.key === 's') {ajstX = -1, ajstY = 0;}
+      else if (event.key === 'd') {ajstX = 1; ajstY = 0}
+
+      if(this.xpos+ajstX >= 0 && this.xpos+ajstX <= 400 && this.ypos+ajstY >= 0 && this.ypos+ajstY <= 400) {
+          var line = new Konva.Line({
+                  points: [this.xpos, this.ypos, this.xpos+ajstX, this.ypos+ajstY],
+                  stroke: '#696969',
+                  strokeWidth: 3,
+                  lineCap: 'round',
+                  lineJoin: 'round',
+              })
+        this.xpos = this.xpos + ajstX;
+        this.ypos = this.ypos + ajstY;
+
+        this.layer.add(line);
+        this.stage.add(this.layer);
+        this.layer.draw();
+      }
+    }
   }
 }
 </script>
