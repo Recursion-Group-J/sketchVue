@@ -5,7 +5,7 @@ import Sketchpage from '../views/Sketchpage.vue'
 const routes = [
   {
     path: '/',
-    name: 'Sketchpage',
+    name: 'Home',
     component: Sketchpage
   },
   {
